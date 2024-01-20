@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Site Web</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+     
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <input type="text" placeholder="Recherche" oninput="searchHandler(this.value)">
+    </div>
+
+    <div id="menu" onmouseenter="startTimer()" onmouseleave="resetTimer()">
+        <a href="#" class="menu-link" onclick="showContent('Accueil')"><i class="fas fa-home"></i><span>Accueil</span></a>
+        <a href="#" class="menu-link" onclick="showContent('Services')"><i class="fas fa-cogs"></i><span>Services</span></a>
+        <a href="#" class="menu-link" onclick="showContent('À Propos')"><i class="fas fa-info-circle"></i><span>À Propos</span></a>
+        <div id="menu-toggle-btn" class="toggle-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+
+    <div id="content">
+        <h2>Contenu principal</h2>
+        <p>Bienvenue sur votre site web. Sélectionnez une option dans le menu.</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+    <script>
+        const contentData = {
+            'Accueil': '<h2>Accueil</h2><p>Contenu de la page Accueil.</p>',
+            'Services': '<h2>Services</h2><p>Contenu de la page Services.</p>',
+            'À Propos': '<h2>À Propos de notre site</h2><p>Bienvenue sur notre site web. Nous sommes dédiés à fournir des informations de qualité et des services exceptionnels.</p><p>N\'hésitez pas à explorer notre contenu et à nous contacter pour toute question.</p>',
+            'Contact': '<h2>Contact</h2><p>Contenu de la page Contact.</p>'
+        };
+
+        let timer;
+
+        function startTimer() {
+            timer = setTimeout(() => {
+                toggleMenu();
+            }, 4500); // Changé la période à 1 seconde
+        }
+
+        function resetTimer() {
+            clearTimeout(timer);
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const content = document.getElementById('content');
+            const toggleBtn = document.getElementById('menu-toggle-btn');
+            menu.classList.toggle('expanded');
+            content.style.marginLeft = menu.classList.contains('expanded') ? '120px' : '50px';
+            toggleBtn.classList.toggle('expanded');
+        }
+
+        function showContent(page) {
+            const content = document.getElementById('content');
+            content.innerHTML = contentData[page] || '<h2>Page non trouvée</h2><p>La page que vous recherchez n\'existe pas.</p>';
+            resetTimer();
+        }
+
+        function searchHandler(value) {
+            const content = document.getElementById('content');
+
+            if (value.toLowerCase().includes('propos')) {
+                content.innerHTML = contentData['À Propos'];
+            } else if (value.toLowerCase().includes('aide')) {
+                content.innerHTML = contentData['Aide'];
+            }
+        }
+    </script>
+</body>
+</html>
